@@ -74,7 +74,7 @@ def play_wordlish():
     for x in range(len(tries)):
       print(f"Try {x+1}: {tries[x]}")
     if (status[0] == fg(2)) and (status[1] == fg(2)) and (status[2] == fg(2)) and (status[3] == fg(2)) and (status[4] == fg(2)):
-      print(f"Congratulations! You correctly guessed {guess} in {turns} turns.")
+      print(f"Congratulations! You correctly guessed {guess} in {turns+1} turns.")
       break
     turns -= 1
 
