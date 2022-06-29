@@ -36,32 +36,41 @@ def adjust_status(rand_word, guess, status):
     elif (guess[i] in rand_word) and (letter_counts[guess[i]] > 0):
       status[i] = fg(3)
 
-rand_word = get_random_word()
-#print(rand_word)
+def play_wordlish():
+  rand_word = get_random_word()
+  #print(rand_word)
 
-turns = 6
-while turns > 0:
-  guess = input("Please enter your guess (5 letter word in the english language): ")
-  valid_guess = False
-  valid_guess = check_valid_length(guess)
-  if not(valid_guess == True):
-    print(f"I'm sorry, but {guess} is not 5 letters.")
-    continue
-  valid_guess = check_valid_word(guess)
-  if not(valid_guess == True):
-    print(f"I'm sorry, but {guess} is not a valid word. You lose one turn.")
+  turns = 6
+  while turns > 0:
+    guess = input("Please enter your guess (5 letter word in the english language): ")
+    valid_guess = False
+    valid_guess = check_valid_length(guess)
+    if not(valid_guess == True):
+      print(f"I'm sorry, but {guess} is not 5 letters.")
+      continue
+    valid_guess = check_valid_word(guess)
+    if not(valid_guess == True):
+      print(f"I'm sorry, but {guess} is not a valid word. You lose one turn.")
+      turns -= 1
+      continue
+    guess = guess.upper()
+
+    status = [fg(1), fg(1), fg(1), fg(1), fg(1)]
+    adjust_status(rand_word, guess, status)
+
+    print(f"{status[0]+guess[0]+status[1]+guess[1]+status[2]+guess[2]+status[3]+guess[3]+status[4]+guess[4]+attr('reset')}")
+    if (status[0] == fg(2)) and (status[1] == fg(2)) and (status[2] == fg(2)) and (status[3] == fg(2)) and (status[4] == fg(2)):
+      print(f"Congratulations! You correctly guessed {guess} in {turns} turns.")
+      break
     turns -= 1
-    continue
-  guess = guess.upper()
 
-  status = [fg(1), fg(1), fg(1), fg(1), fg(1)]
-  adjust_status(rand_word, guess, status)
+  if turns <= 0:
+    print(f"Sorry, you have run out of turns. The correct answer was {rand_word}!")
+  
+  repeat_play = input("Would you like to play again? Y/N: ")
+  if (repeat_play.upper() == "Y"):
+    play_wordlish()
 
-  print(f"{status[0]+guess[0]+status[1]+guess[1]+status[2]+guess[2]+status[3]+guess[3]+status[4]+guess[4]+attr('reset')}")
-  if (status[0] == fg(2)) and (status[1] == fg(2)) and (status[2] == fg(2)) and (status[3] == fg(2)) and (status[4] == fg(2)):
-    print(f"Congratulations! You correctly guessed {guess} in {turns} turns.")
-    break
-  turns -= 1
+play_wordlish()
 
-if turns <= 0:
-  print(f"Sorry, you have run out of turns. The correct answer was {rand_word}!")
+
