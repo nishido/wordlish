@@ -1,4 +1,4 @@
-from colored import fg, attr #fg{1} = red, fg{2} = green, fg{3} = yellow, attr('reset') = back to regular
+from colored import fg, attr
 from english_words import english_words_lower_set
 from random import choice
 # A terminal version of the popular wordle game
@@ -40,14 +40,15 @@ def play_wordlish():
   print("Welcome to wordl-ish! The poor man's, terminal based, Wordle!")
   print("The rules are simple: ")
   print("1. Guess a 5 letter word from the english language (no plurals)")
-  print("2. wordl-ish will colour-code the letters of your guess based on their correctness - ")
+  print("2. wordl-ish will colour-code the letters of your guess based on " +
+        "their correctness - ")
   print("      - Green:  correct!")
   print("      - Yellow: the letter exists but is in the wrong place ")
   print("      - Red:    the letter is not anywhere in the word ")
-  print("3. Use these codes to help you with your next guess! You get 6 tries. ")
+  print("3. Use these codes to help you with your next guess! You get 6 tries.")
   print("4. ???? ")
   print("5. Profit! ")
-  
+
   rand_word = get_random_word()
   #print(rand_word)
 
@@ -70,17 +71,21 @@ def play_wordlish():
 
     status = [fg(1), fg(1), fg(1), fg(1), fg(1)]
     adjust_status(rand_word, guess, status)
-    tries.append(f"{status[0]+guess[0]+status[1]+guess[1]+status[2]+guess[2]+status[3]+guess[3]+status[4]+guess[4]+attr('reset')}")
+    tries.append(f"{status[0]+guess[0]+status[1]+guess[1]+status[2]+guess[2]}" +
+                 f"{status[3]+guess[3]+status[4]+guess[4]+attr('reset')}")
     for x in range(len(tries)):
       print(f"Try {x+1}: {tries[x]}")
-    if (status[0] == fg(2)) and (status[1] == fg(2)) and (status[2] == fg(2)) and (status[3] == fg(2)) and (status[4] == fg(2)):
-      print(f"Congratulations! You correctly guessed {guess} in {turns+1} turns.")
+    if ((status[0] == fg(2)) and (status[1] == fg(2)) and
+       (status[2] == fg(2)) and (status[3] == fg(2)) and (status[4] == fg(2))):
+      print(f"Congratulations! You correctly guessed {guess}" +
+            f"in {turns+1} turns.")
       break
     turns -= 1
 
   if turns <= 0:
-    print(f"Sorry, you have run out of turns. The correct answer was {rand_word}!")
-  
+    print(f"Sorry, you have run out of turns." +
+          f"The correct answer was {rand_word}!")
+
   repeat_play = input("Would you like to play again? Y/N: ")
   if (repeat_play.upper() == "Y"):
     play_wordlish()
